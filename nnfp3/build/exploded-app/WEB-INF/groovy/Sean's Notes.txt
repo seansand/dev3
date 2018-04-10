@@ -1,0 +1,20 @@
+Sean says:
+
+In version nnfp2
+
+Replaced gradle cache of groovy-all-1.8.6.jar with version from 
+http://stackoverflow.com/questions/19611093/groovy-servlet-on-app-engine
+in order to get around a groovy bug:
+
+
+java.security.AccessControlException: access denied ("java.lang.RuntimePermission" "accessClassInPackage.sun.reflect")
+
+for basically all groovy classes.
+
+
+In version nnfp3
+
+A validation error is still happening at build test time but Gradle still builds it.
+
+
+Uses seansand@gmail.com on the app engine (not uw address)

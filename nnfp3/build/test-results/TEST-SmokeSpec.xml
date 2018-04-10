@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="SmokeSpec" tests="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="Scarlet" time="0.0">
+  <properties/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Sep 07, 2017 9:20:46 PM org.codehaus.groovy.runtime.m12n.SimpleExtensionModule getMetaMethods
+WARNING: Module [gaelyk-extension-module] - Unable to load extension class [class groovy.servlet.ServletCategory] due to [javax/el/ELContext]. Maybe this module is not supported by your JVM version.
+]]></system-err>
+</testsuite>

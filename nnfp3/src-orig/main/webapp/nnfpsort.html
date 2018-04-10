@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+<TITLE>NNFP Sort</TITLE>
+<SCRIPT>
+
+   var doReplaceNames = true;  
+   var allLines;
+   var rajivLines = [];
+   var seanLines = [];
+   var newSeanLines = [];
+   var teamArray1 = [];
+   var teamArray2 = [];
+   var allText;
+  
+   function rearrange()
+   {
+      rajivLines = [];
+      seanLines = [];
+      newSeanLines = [];
+      teamArray1 = [];
+      teamArray2 = [];
+   
+      try
+      {
+         readLines();
+         getRajivOrder();
+         sortSeanOrder();
+         redrawTextArea();
+         validationOk("Rearranged.");
+         
+      }
+      catch (e)
+      {
+         document.getElementById("validationText").innerHTML = 
+            "<FONT COLOR='#FF0000'>Error: " + e + "</FONT>";
+      }
+   }
+
+   function redrawTextArea()
+   {
+       allText = "";
+       
+       for (var j = 0; j < rajivLines.length; ++j) {
+          allText += rajivLines[j] + "\n";
+       }
+       allText += "\n";
+
+       for (var i = 0; i < newSeanLines.length; ++i) {
+          allText += newSeanLines[i] + "\n";
+       }
+
+       document.getElementById("text").value = allText;
+   
+   }
+   
+   function replaceNames(line)
+   {
+      if (doReplaceNames) {
+      
+         line = line.substring(0, 6);
+      
+         line = line.replace("NE ", "NEP");
+         line = line.replace("GB ", "GBP");
+         line = line.replace("KC ", "KCC");
+         line = line.replace("NO ", "NOS");
+         line = line.replace("TB ", "TBB");
+         line = line.replace("SF ", "SFO");
+      }
+      return line;
+   }
+   
+   
+   
+   function sortSeanOrder()
+   {
+      var found = false;
+   
+      for (var i = 0; i < seanLines.length; ++i) {
+         
+         for (var j = 0; j < rajivLines.length; ++j) {
+             
+            if (seanLines[i].indexOf(teamArray1[j]) !== -1 ||
+                seanLines[i].indexOf(teamArray2[j]) !== -1)
+            {
+               newSeanLines[j] = replaceNames(seanLines[i]);
+               found = true;
+               break;
+            }
+         }
+         
+         if (!found) {
+            throw ("Did not find Rajiv's: " + seanLines[i]);         
+         }
+      }
+   }
+   
+   
+   function getRajivOrder()
+   {
+      for (var i = 0; i < rajivLines.length; ++i) {
+
+         var tokens = rajivLines[i].split(" ");
+         if (tokens.length < 3)
+            throw("Line has less than three tokens: " + rajivLines[i]);
+         if (tokens[1] !== "@")
+            throw("Did not find @ symbol: " + rajivLines[i]);
+         if (tokens[0].length < 2)
+            throw("Do not understand: " + tokens[0]);         
+         if (tokens[2].length < 2)  
+            throw("Do not understand: " + tokens[2]);   
+
+         var useLength = tokens[0].substring(0, 2) === "DE" ||
+                         tokens[0].substring(0, 2) === "MI" ||
+                         tokens[0].substring(0, 2) === "CA" ||
+                         tokens[0].substring(0, 2) === "AR" ||
+                         tokens[0].substring(0, 2) === "IN" ||
+                         tokens[0].substring(0, 2) === "NY" ? 3 : 2;
+                         
+         teamArray1[i] = tokens[0].substring(0, useLength);
+         useLength = tokens[2].substring(0, 2) === "DE" ||
+                     tokens[2].substring(0, 2) === "MI" ||
+                     tokens[2].substring(0, 2) === "CA" ||
+                     tokens[2].substring(0, 2) === "AR" ||
+                     tokens[2].substring(0, 2) === "IN" ||
+                     tokens[2].substring(0, 2) === "NY" ? 3 : 2;
+         teamArray2[i] = tokens[2].substring(0, useLength);
+      }
+   }
+   
+   function readLines()
+   {
+      allText = document.getElementById("text").value;
+      allText = allText.toUpperCase();
+      allLines = allText.split("\n");
+      
+      var foundSpace = false;
+      
+      for (var i = 0; i < allLines.length; ++i) {
+         allLines[i] = allLines[i].trim();
+         
+         if (allLines[i] === '') {    
+            foundSpace = true;
+         }
+         else if (foundSpace) {
+            seanLines.push(allLines[i]);
+         }
+         else {
+            rajivLines.push(allLines[i]);
+         }
+      }
+      
+      
+   }
+   
+   function validationOk(text)
+   {       
+      document.getElementById("validationText").innerHTML = 
+         "<FONT COLOR='#008000'>" + text + "</FONT>";
+   }
+  
+  
+  
+</SCRIPT>
+</HEAD>
+<BODY>
+   <H4>NNFP Sort<BR>
+   Rajiv's order, then your lines, separated by a blank row.
+   <button onclick="rearrange()" type="button">Rearrange</button></h4>
+   <textarea id="text" autofocus="autofocus" cols=50 rows=34>
+MIN @ CHI
+GBP @ DET
+TBB @ TEN
+
+GB   1   (GB  @ DET) -3
+CHI  2   (MIN @ CHI)  4.5
+TBB  3   (TBB @ TEN) -6.5
+</textarea><br>
+   <p id="validationText"></P>
+</BODY>
+</HTML>

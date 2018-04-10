@@ -1,0 +1,19 @@
+Sean says:
+
+Replaced gradle cache of groovy-all-1.8.6.jar with version from 
+http://stackoverflow.com/questions/19611093/groovy-servlet-on-app-engine
+in order to get around a groovy bug:
+
+
+java.security.AccessControlException: access denied ("java.lang.RuntimePermission" "accessClassInPackage.sun.reflect")
+
+for basically all groovy classes.
+
+
+A Spock error is still happening at build test time but Gradle still builds it.
+
+The jar is labeled 1.8.6 but it is really the newer 2.1.10 version with the name changed.
+
+
+
+Uses seansand@gmail.com on the app engine (not uw address)

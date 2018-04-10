@@ -1,0 +1,269 @@
+<HTML>
+<HEAD>
+<TITLE>NNFP Validator</TITLE>
+<SCRIPT>
+  
+   var allText;
+   var tokens;
+   var columnCount;
+   var rowCount;
+   var teamArray;
+   var pointArray;
+  
+   function validate()
+   {
+      try
+      {
+         columnCount = 0;
+         rowCount = 1;
+         teamArray = [];
+         pointArray = [];
+         parseTextIntoTokens();
+         columnCount = countNames();      
+         readTokens();
+
+         validateDimensions();        //Check that both arrays have the same dimensions   
+         validateNoDuplicateTeams();  //Check that no team appears in different rows
+         validatePoints();            //Check that all the numbers are consecutive (1..n)
+    
+         validationOk("Validation OK");      
+      }
+      catch (e)
+      {
+         document.getElementById("validationText").innerHTML = 
+            "<FONT COLOR='#FF0000'>Error: " + e + "</FONT>";
+      }
+   }
+
+   
+   function validateNoDuplicateTeams()
+   { 
+      var previousTeams = "";
+
+      for (var i = 0; i < rowCount; ++i)
+      {
+         var setObj = {};
+
+         // Check for only 2 teams
+         
+         for (var j = 0; j < teamArray[i].length; ++j)
+         {
+            setObj[teamArray[i][j]] = true;
+         }
+         
+         if (Object.keys(setObj).length > 2)
+         {
+            throw ("Picks row " + (i + 1) + " contains more than two teams");
+         }
+
+         // Now make sure neither of the 1 or 2 teams was used previously.
+         
+         for (var teamName in setObj) 
+         {
+            if (setObj.hasOwnProperty(teamName)) 
+            {
+               if (previousTeams.indexOf("+" + teamName + "-") !== -1)
+               {
+                  throw ("Picks row " + (i + 1) + " contains " + teamName + " which was in a previous row");
+               }
+            
+               previousTeams += "+" + teamName + "-";
+            }
+         }
+      }  
+   }
+   
+   function validatePoints()
+   {
+      for (var j = 0; j < columnCount; ++j)
+      {
+         var valuesString = "";
+      
+         for (var i = 0; i < rowCount; ++i)
+         {
+             valuesString += "+" + pointArray[i][j] + "-";
+         }
+         
+         for (var k = 1; k <= rowCount; ++k)
+         {
+            if (valuesString.indexOf("+" + k + "-") == -1)
+            {
+               throw ("Column " + (j + 1) + " does not contain the value " + k);
+            }
+         }
+      }
+   }
+   
+   function validateDimensions()
+   {
+      if (teamArray.length !== pointArray.length)
+      {
+         throw ("Unexpected end-of-line at end");
+      }
+      for (var i = 0; i < teamArray.length; ++i)
+      {
+         var firstArrayLength = teamArray[0].length;
+      
+         if (firstArrayLength !== pointArray[i].length ||
+             teamArray[i].length !== pointArray[i].length)
+         {
+            throw ("Unexpected end-of-line at end");
+         }
+      }
+   }
+
+   function isNumeric(num)
+   {
+      return !isNaN(num)
+   }
+   
+   function readTeam(i, currRow, currColumn)
+   {
+      if (tokens[i] === "endl")
+      {
+         throw("Unexpected end-of-line in picks row " + (1 + currRow));
+      }
+
+      if (isNumeric(tokens[i]))
+      {
+         throw("Team name appears to be a number in row " + (1 + currRow) + ", column " + (1 + currColumn));
+      }
+      
+      teamArray[currRow][currColumn] = tokens[i];
+   }
+   
+   function readScore(i, currRow, currColumn)
+   {
+      if (tokens[i] === "endl")
+      {
+         throw("Unexpected end-of-line in picks row " + (1 + currRow));
+      }
+   
+      if (isNaN(tokens[i]))
+      {
+         throw("Missing number in picks row " + (1 + currRow) + ", column " + (1 + currColumn));
+      }
+   
+      pointArray[currRow][currColumn] = parseInt(tokens[i]);
+   }
+   
+   function readEndl(i, currRow, currColumn)
+   {
+      if (tokens[i] !== "endl")
+      {
+         throw("Extra text in picks row " + (1 + currRow));
+      }
+      
+      teamArray[teamArray.length] = [];
+      pointArray[pointArray.length] = [];
+   }
+   
+   function readTokens()
+   {
+      var start = firstRealElement();
+
+      teamArray[teamArray.length] = [];
+      pointArray[pointArray.length] = [];
+      
+      var currColumn = 0;
+      var currRow = 0;
+
+      for (var i = start; i < tokens.length; ++i)
+      {
+         if (currColumn < columnCount)
+         {
+            if ((currRow + i) % 2 === 0)
+            {
+               readTeam(i, currRow, currColumn);
+            }
+            else 
+            {
+               readScore(i, currRow, currColumn);
+               ++currColumn;
+            }
+         }
+         else
+         {
+            readEndl(i, currRow, currColumn);
+            ++currRow;
+            ++rowCount;
+            currColumn = 0;
+         }
+      }
+   }
+  
+   function firstRealElement()
+   {
+       var hyphenFlag = false
+       
+       for (var i = 0; i < tokens.length; ++i)
+       {
+          var token = tokens[i];
+          if (!hyphenFlag)
+          {
+             if (token.indexOf("-") !== -1)
+             {
+                hyphenFlag = true;
+             }
+          }
+          else
+          {
+             if (token === "endl")
+             {
+                return i + 1;
+             }
+          }
+        
+       }
+       throw("Missing expected text");
+   }
+  
+   function countNames()
+   {
+       for (var i = 0; i < tokens.length; ++i)
+       {
+          if (tokens[i] === 'endl')
+             return i          
+       }
+       throw("Missing expected text");
+   }
+  
+   function validationOk(text)
+   {       
+      document.getElementById("validationText").innerHTML = 
+         "<FONT COLOR='#008000'>" + text + "</FONT>";
+   }
+  
+   function parseTextIntoTokens()
+   {
+      allText = document.getElementById("text").value;
+      allText = allText.toUpperCase();
+      allText = allText.replace(/\n/g, " endl ");
+      
+      tokens = allText.split(" ");
+      tokens = tokens.filter(function(n) {return n});
+      
+      while (tokens[tokens.length - 1] === "endl")  
+      {
+         tokens.pop();  // remove trailing endls
+      }
+      
+   }
+    
+  
+</SCRIPT>
+</HEAD>
+<BODY>
+   <H2>NNFP Validator</H2>
+   <textarea id="text" autofocus="autofocus" cols=100 rows=20>
+RAJIV   SEAN    ERIC
+-----   ----    ----
+NYG  2  DAL  3  NYG  3
+GB   1  GB   1  GB   2
+CHI  3  NO   2  NO   1
+   
+   </textarea><br>
+   <button onclick="validate()" type="button">Validate</button>
+   <p id="validationText"></P>
+</BODY>
+</HTML>

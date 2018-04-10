@@ -1,0 +1,1 @@
+Adjusted nnfpsort for LAC and LAR.

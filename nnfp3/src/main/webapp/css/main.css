@@ -1,0 +1,56 @@
+body {
+	font-family: Arial;
+	margin: 30px;
+}
+
+
+h1 {
+	color: #D33381;
+	border-bottom: black 3px dotted;
+}
+h2 {
+	color: #D33381;
+	border-bottom: black 3px dotted;
+}
+h3 {
+	color: #D33381;
+	border-top: black 3px dotted;
+}
+.betaheader {
+	color: #000080; border-bottom: #CCCCCC 3px double}
+.betafooter {
+	color: #000080; border-bottom: #CCCCCC 3px double}
+
+p { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
+td { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:9pt}
+
+table.thin
+{
+  border-width: 0 0 0px 0px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-style: solid;
+}
+.thin td, .thin th
+{
+  margin: 0;
+  padding: 2px;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  min-width:108px;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; 
+  font-size:10pt
+  color: #000000;
+}
+
+.normalfont { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
+.matchup { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt; hyphens: none} 
+.smallfont { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:9pt} 
+.tinyfont { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:8pt} 
+.bigfont { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:11pt} 
+.nondisplay { display:none; }
+
+
+PRE { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
+
+
