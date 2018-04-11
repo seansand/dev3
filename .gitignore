@@ -1,2 +1,3 @@
 *.bin
 *.properties.lock
+nnfp3/build/*

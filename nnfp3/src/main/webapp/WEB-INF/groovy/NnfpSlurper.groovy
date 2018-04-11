@@ -30,7 +30,7 @@ public class NnfpSlurper
          String mills = "" + System.currentTimeMillis() 
       
          def url = new URL(
-            "http://football.myfantasyleague.com/$mYear/export?TYPE=nflSchedule&L=&W=$week&whatever=$mills")
+            "http://www.myfantasyleague.com/$mYear/export?TYPE=nflSchedule&L=&W=$week&whatever=$mills")
 
          def nflResultsString =  url.getText();
     

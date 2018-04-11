@@ -41,7 +41,7 @@ try
    // Then get MFL results and return them as request.results   
   
 
-   String uString = "http://football.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+   String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
    
    def mflUrl = new URL(uString);
 
