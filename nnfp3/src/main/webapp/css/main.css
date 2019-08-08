@@ -21,18 +21,8 @@ h1 {
 .betafooter {
 	color: #000080; border-bottom: #CCCCCC 3px double}
 
-p { color: #000000; font-family: monospace, serif; font-size:10pt} 
-td { color: #000000; font-family: monospace, serif; font-size:9pt}
-
-table
-{
-  border-width: 0 0 0px 0px;
-  border-spacing: 0;
-  border-collapse: collapse;
-  border-style: solid;
-  font-family: monospace, serif; 
-  font-size:10pt
-}
+p { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
+td { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:9pt}
 
 table.thin
 {
@@ -40,8 +30,6 @@ table.thin
   border-spacing: 0;
   border-collapse: collapse;
   border-style: solid;
-  font-family: monospace, serif; 
-  font-size:10pt
 }
 .thin td, .thin th
 {
@@ -50,19 +38,19 @@ table.thin
   border-width: 1px 1px 1px 1px;
   border-style: solid;
   min-width:108px;
-  font-family: monospace, serif; 
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; 
   font-size:10pt
   color: #000000;
 }
 
-.normalfont { color: #000000; font-family: monospace, serif; font-size:10pt} 
-.matchup { color: #000000; font-family: monospace, serif; font-size:10pt; hyphens: none} 
-.smallfont { font-family: monospace, serif; font-size:9pt} 
-.tinyfont { font-family: monospace, serif; font-size:8pt} 
-.bigfont { color: #000000; font-family: monospace, serif; font-size:11pt} 
+.normalfont { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
+.matchup { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt; hyphens: none} 
+.smallfont { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:9pt} 
+.tinyfont { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:8pt} 
+.bigfont { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:11pt} 
 .nondisplay { display:none; }
 
 
-PRE { font-family: monospace, serif; font-size:10pt} 
+PRE { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
 
 
