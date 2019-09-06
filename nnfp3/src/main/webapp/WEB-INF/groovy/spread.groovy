@@ -1,8 +1,9 @@
 //Spread.groovy
 
-import java.util.regex.*;
+package com.uwalumni.seansand.spread
 
-final Integer YEAR = Constants.YEAR
+
+final Integer YEAR = (new Date() - 55).getAt(Calendar.YEAR)  // From Constants.groovy
 
 // The object that gets sent to the spread.gtpl file is 'request'
 // Must value request.week and request.lines.

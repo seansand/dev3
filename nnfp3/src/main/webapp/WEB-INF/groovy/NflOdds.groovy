@@ -2,8 +2,6 @@
 // Date: Nov 1, 2008 
 // Does NNFP Picks
 
-
-
 public class NflOdds
 {
 
