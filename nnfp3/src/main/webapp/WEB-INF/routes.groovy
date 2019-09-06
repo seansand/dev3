@@ -7,5 +7,8 @@ get "/dx/@filename?", forward: "/newweb.groovy"
 get "/nnfp", forward: "/nnfp.groovy"
 get "/pebblecards", forward: "/pebblecards.groovy"
 get "/nflpicks", forward: "/nflpicks.groovy"
+get "/spread", forward: "/spread.groovy"
+get "/spreads", forward: "/spread.groovy"
+get "/spreads.groovy", forward: "/spread.groovy"
 
 get "/favicon.ico", redirect: "/images/srsico.png"
