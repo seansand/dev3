@@ -253,27 +253,7 @@
    E-mail order first, then a blank line, then the auto-generated spread lines.<P>
    <button onclick="rearrange()" type="button">Rearrange</button> <button onclick="truncate()" type="button">Truncate</button> 
    <button onclick="verify()" type="button">Verify</h4>
-   <textarea id="text" autofocus="autofocus" cols=50 rows=34>
-NYJ @ NE  (replace
-WAS @ GB   these
-CLE @ BAL  with
-LAR @ ATL  Ryan's
-LAC @ PHI  e-mail
-MIN @ CHI  order)
-CAR @ BUF
-TEN @ HOU
-MIA @ IND
-DAL @ KC
-NO  @ TB
-DET @ ARI
-DEN @ NYG
-JAC @ OAK
-SF  @ SEA
-PIT @ CIN
-
-<%request.lines.each(){println it}%>
-
-</textarea><br>
+   <textarea id="text" autofocus="autofocus" cols=50 rows=34><%request.lines.each(){println it}%></textarea><br>
    <p id="validationText"></P>
 </BODY>
 </HTML>

@@ -25,12 +25,21 @@ def mflUrl = new URL(uString)
    
 def urlResponse = mflUrl.get()
 assert 200 == urlResponse.responseCode
-//request.lines << urlResponse.text
 
-List<Matchup> matchupList = processXml(urlResponse.text)
+def nflSchedule = new XmlSlurper().parseText(urlResponse.text)
 
-matchupList.each() {
-   request.lines << it.toString()
+List<Matchup> matchupList1 = processXml1(nflSchedule)
+
+matchupList1.each() {
+   request.lines << it.toFirstString()
+}
+
+request.lines << ""
+
+List<Matchup> matchupList2 = processXml2(nflSchedule)
+
+matchupList2.each() {
+   request.lines << it.toSecondString()
 }
 
 
@@ -50,7 +59,11 @@ class Matchup implements Comparable {
       return rank < 10 ? " " + rank : "" + rank
    }
 
-   public String toString() {
+   public String toFirstString() {
+      return "${normalize(pick)} @ ${normalize(opponent)}"
+   }
+
+   public String toSecondString() {
       return "${normalize(pick)} ${rankToString()}  (vs. ${normalize(opponent)}) ${spread/10}"
    }
    
@@ -75,13 +88,39 @@ class Matchup implements Comparable {
    
 }
 
-
-List<Matchup> processXml(String text)
+/**
+ * Chronological list (replace with Ryan's)
+ */
+List<Matchup> processXml1(def nflSchedule)
 {
-   def mapOfMaps = new LinkedHashMap<String, LinkedHashMap<String, Object>>();
+   List<Matchup> allMatchups = []
    
-   def nflSchedule = new XmlSlurper().parseText(text)
+   nflSchedule.matchup.each()
+   {
+      m ->
+      
+      List<Matchup> twoTeams = []
+
+      // XML seems to always put the visitor first, then home...this code assumes this is true.
+      // If this changes, then modify this 'each' to check, as there is an 'isHome' flag in the XML.
+
+      m.team.each()
+      {
+          Matchup matchup = new Matchup(pick: it.@id)
+          twoTeams << matchup
+      }
+
+      allMatchups << new Matchup(pick: twoTeams[0].pick, opponent: twoTeams[1].pick)
+   }
    
+   return allMatchups
+}
+
+/**
+ * List with spreads and ranks
+ */
+List<Matchup> processXml2(def nflSchedule)
+{
    List<Matchup> allMatchups = []
    
    nflSchedule.matchup.each()
@@ -120,5 +159,6 @@ List<Matchup> processXml(String text)
    allMatchups.each() {
       it.rank = counter++
    }
-
+   
+   return allMatchups
 }
