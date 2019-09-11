@@ -54,6 +54,7 @@ class Matchup implements Comparable {
    String opponent
    Double spread
    Integer rank
+   Boolean isHome
 
    String rankToString() {
       return rank < 10 ? " " + rank : "" + rank
@@ -64,7 +65,8 @@ class Matchup implements Comparable {
    }
 
    public String toSecondString() {
-      return "${normalize(pick)} ${rankToString()}  (vs. ${normalize(opponent)}) ${spread/10}"
+      String vs = isHome ? 'v' : '@'
+      return "${normalize(pick)} ${rankToString()}  ($vs ${normalize(opponent)}) ${spread/10}"
    }
    
    @Override
@@ -144,6 +146,8 @@ List<Matchup> processXml2(def nflSchedule)
       
       twoTeams[0].opponent = twoTeams[1].pick
       twoTeams[1].opponent = twoTeams[0].pick
+      twoTeams[0].isHome = false
+      twoTeams[1].isHome = true
       
       if (twoTeams[0].spread < twoTeams[1].spread) {
          allMatchups << twoTeams[0]

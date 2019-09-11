@@ -250,7 +250,7 @@
 <BODY>
    <H4>NNFP Spreads (Week 
    <% print request.week%>)<BR>
-   E-mail order first, then a blank line, then the auto-generated spread lines.<P>
+   E-mail order, then spread lines, separated by a blank line.<P>
    <button onclick="rearrange()" type="button">Rearrange</button> <button onclick="truncate()" type="button">Truncate</button> 
    <button onclick="verify()" type="button">Verify</h4>
    <textarea id="text" autofocus="autofocus" cols=50 rows=34><%request.lines.each(){println it}%></textarea><br>
