@@ -28,7 +28,6 @@
    function truncate()
    {
       allText = document.getElementById("text").value;
-      allText = allText.toUpperCase();
       allLines = allText.split("\\n");   
    
       allText = "";
@@ -71,6 +70,31 @@
             "<FONT COLOR='#FF0000'>Error: " + e + "</FONT>";
       }
    }
+   
+   function renumber()
+   {
+      ryanLines = [];
+      seanLines = [];
+      newSeanLines = [];
+   
+      try
+      {
+         readLines();
+
+         for (var i = 0; i < seanLines.length; ++i) {
+            const numberStr = (i < 9) ? (' ' + (i+1)) : ('' + (i+1));
+            newSeanLines.push(seanLines[i].substring(0, 4) + numberStr + seanLines[i].substring(6));
+         }
+         
+         redrawTextArea();
+         validationOk("Renumbered.");
+      }
+      catch (e)
+      {
+         document.getElementById("validationText").innerHTML = 
+            "<FONT COLOR='#FF0000'>Error: " + e + "</FONT>";
+      }
+   }
 
    function verify()
    {
@@ -97,6 +121,10 @@
             if (i + 1 !== truncatedSeanLines[i]) {
                fail = true;
             }
+         }
+         
+         if (truncatedSeanLines.length != ryanLines.length) {
+            fail = true;
          }
          
          if (fail)
@@ -215,7 +243,6 @@
    function readLines()
    {
       allText = document.getElementById("text").value;
-      allText = allText.toUpperCase();
       allLines = allText.split("\\n");
       
       var foundSpace = false;
@@ -248,11 +275,14 @@
 </SCRIPT>
 </HEAD>
 <BODY>
-   <H4>NNFP Spreads (Week 
-   <% print request.week%>)<BR>
-   E-mail order, then spread lines, separated by a blank line.<P>
-   <button onclick="rearrange()" type="button">Rearrange</button> <button onclick="truncate()" type="button">Truncate</button> 
-   <button onclick="verify()" type="button">Verify</h4>
+   <H4>NNFP Spreads (Week <% print request.week%>)</H4>
+   <P>E-mail order, then spread lines, separated by a blank line.</P>
+   <P>
+   <button onclick="renumber()" type="button">Renumber</button>   
+   <button onclick="rearrange()" type="button">Rearrange</button> 
+   <button onclick="verify()" type="button">Verify</button>
+   <button onclick="truncate()" type="button">Truncate</button> 
+   </P>
    <textarea id="text" autofocus="autofocus" cols=50 rows=34><%request.lines.each(){println it}%></textarea><br>
    <p id="validationText"></P>
 </BODY>
