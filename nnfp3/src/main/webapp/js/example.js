@@ -261,13 +261,13 @@ function displayTimeRemaining(remaining, awayScore, homeScore)
    }
    var retVal = "";
    if (remaining > 2700)
-      retVal += "Q1";
+      retVal += "1st";
    else if (remaining > 1800)
-      retVal += "Q2";
+      retVal += "2nd";
    else if (remaining == 1800)
       retVal += "Half";
    else if (remaining > 900)
-      retVal += "Q3";
+      retVal += "3rd";
    else
    {
       var quarter = ((remaining - 1) % 900) + 1;
