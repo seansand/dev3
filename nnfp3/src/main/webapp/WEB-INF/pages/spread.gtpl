@@ -283,7 +283,77 @@
    <button onclick="verify()" type="button">Verify</button>
    <button onclick="truncate()" type="button">Truncate</button> 
    </P>
-   <textarea id="text" autofocus="autofocus" cols=50 rows=34><%request.lines.each(){println it}%></textarea><br>
-   <p id="validationText"></P>
+   <TABLE BORDER=0>
+     <TR><TD>
+       <textarea id="text" autofocus="autofocus" cols=50 rows=34><%request.lines.each(){println it}%></textarea><br>
+       <p id="validationText"></P>
+       <TD WIDTH = 20></TD>
+       <TD>
+       <TABLE BORDER=0>
+         <TR><TD ALIGN=CENTER COLSPAN=7>
+         <I>Point spread to actual win/loss percentage</I>
+         </TD></TR><TR HEIGHT=10></TR><TR>
+
+         <TD ALIGN=CENTER><B>0.0</B><BR>&nbsp;50.0&nbsp;<BR s=split>&nbsp;50.0&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>0.5</B><BR>&nbsp;51.5&nbsp;<BR s=split>&nbsp;48.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>1.0</B><BR>&nbsp;52.7&nbsp;<BR s=split>&nbsp;47.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>1.5</B><BR>&nbsp;54.2&nbsp;<BR s=split>&nbsp;45.8&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>2.0</B><BR>&nbsp;55.7&nbsp;<BR s=split>&nbsp;44.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>2.5</B><BR>&nbsp;57.2&nbsp;<BR s=split>&nbsp;42.8&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>3.0</B><BR>&nbsp;58.6&nbsp;<BR s=split>&nbsp;41.4</TD end=end>
+         </TR><TR></TR><TR></TR><TR>
+         <TD ALIGN=CENTER><B>3.5</B><BR>&nbsp;59.9&nbsp;<BR s=split>&nbsp;40.1&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>4.0</B><BR>&nbsp;61.3&nbsp;<BR s=split>&nbsp;38.7&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>4.5</B><BR>&nbsp;62.7&nbsp;<BR s=split>&nbsp;37.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>5.0</B><BR>&nbsp;64.0&nbsp;<BR s=split>&nbsp;36.0&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>5.5</B><BR>&nbsp;65.5&nbsp;<BR s=split>&nbsp;34.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>6.0</B><BR>&nbsp;66.7&nbsp;<BR s=split>&nbsp;33.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>6.5</B><BR>&nbsp;68.1&nbsp;<BR s=split>&nbsp;31.9</TD end=end>
+         </TR><TR></TR><TR></TR><TR>
+         <TD ALIGN=CENTER><B>7.0</B><BR>&nbsp;69.3&nbsp;<BR s=split>&nbsp;30.7&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>7.5</B><BR>&nbsp;70.7&nbsp;<BR s=split>&nbsp;29.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>8.0</B><BR>&nbsp;71.9&nbsp;<BR s=split>&nbsp;28.1&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>8.5</B><BR>&nbsp;73.0&nbsp;<BR s=split>&nbsp;27.0&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>9.0</B><BR>&nbsp;74.1&nbsp;<BR s=split>&nbsp;25.9&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>9.5</B><BR>&nbsp;75.2&nbsp;<BR s=split>&nbsp;24.8&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>10.0</B><BR>&nbsp;76.5&nbsp;<BR s=split>&nbsp;23.5</TD end=end>
+         </TR><TR></TR><TR></TR><TR>
+         <TD ALIGN=CENTER><B>10.5</B><BR>&nbsp;77.7&nbsp;<BR s=split>&nbsp;22.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>11.0</B><BR>&nbsp;78.7&nbsp;<BR s=split>&nbsp;21.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>11.5</B><BR>&nbsp;79.7&nbsp;<BR s=split>&nbsp;20.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>12.0</B><BR>&nbsp;80.6&nbsp;<BR s=split>&nbsp;19.4&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>12.5</B><BR>&nbsp;81.7&nbsp;<BR s=split>&nbsp;18.3&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>13.0</B><BR>&nbsp;82.6&nbsp;<BR s=split>&nbsp;17.4&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>13.5</B><BR>&nbsp;83.5&nbsp;<BR s=split>&nbsp;16.5</TD end=end>
+         </TR><TR></TR><TR></TR><TR>
+         <TD ALIGN=CENTER><B>14.0</B><BR>&nbsp;84.4&nbsp;<BR s=split>&nbsp;15.6&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>14.5</B><BR>&nbsp;85.2&nbsp;<BR s=split>&nbsp;14.8&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>15.0</B><BR>&nbsp;86.0&nbsp;<BR s=split>&nbsp;14.0&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>15.5</B><BR>&nbsp;86.8&nbsp;<BR s=split>&nbsp;13.2&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>16.0</B><BR>&nbsp;87.5&nbsp;<BR s=split>&nbsp;12.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>16.5</B><BR>&nbsp;88.3&nbsp;<BR s=split>&nbsp;11.7&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>17.0</B><BR>&nbsp;89.0&nbsp;<BR s=split>&nbsp;11.0</TD end=end>
+         </TR><TR></TR><TR></TR><TR>
+         <TD ALIGN=CENTER><B>17.5</B><BR>&nbsp;89.6&nbsp;<BR s=split>&nbsp;10.4&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>18.0</B><BR>&nbsp;90.3&nbsp;<BR s=split>&nbsp;9.7&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>18.5</B><BR>&nbsp;90.9&nbsp;<BR s=split>&nbsp;9.1&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>19.0</B><BR>&nbsp;91.5&nbsp;<BR s=split>&nbsp;8.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>19.5</B><BR>&nbsp;92.1&nbsp;<BR s=split>&nbsp;7.9&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>20.0</B><BR>&nbsp;92.5&nbsp;<BR s=split>&nbsp;7.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>20.5</B><BR>&nbsp;93.0&nbsp;<BR s=split>&nbsp;7.0</TD end=end>
+         </TR><TR></TR><TR></TR><TR>
+         <TD ALIGN=CENTER><B>21.0</B><BR>&nbsp;93.5&nbsp;<BR s=split>&nbsp;6.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>21.5</B><BR>&nbsp;93.9&nbsp;<BR s=split>&nbsp;6.1&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>22.0</B><BR>&nbsp;94.4&nbsp;<BR s=split>&nbsp;5.6&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>22.5</B><BR>&nbsp;94.8&nbsp;<BR s=split>&nbsp;5.2&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>23.0</B><BR>&nbsp;95.1&nbsp;<BR s=split>&nbsp;4.9&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>23.5</B><BR>&nbsp;95.5&nbsp;<BR s=split>&nbsp;4.5&nbsp;</TD end=end>
+         <TD ALIGN=CENTER><B>24.0</B><BR>&nbsp;95.9&nbsp;<BR s=split>&nbsp;4.1</TD end=end>
+         </TR>
+         </TABLE>
+       
+       </TD>
+     </TD></TR>
+   </TABLE>
 </BODY>
 </HTML>
