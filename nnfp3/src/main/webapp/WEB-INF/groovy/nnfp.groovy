@@ -40,8 +40,8 @@ try
    
    // Then get MFL results and return them as request.results   
   
-
-   String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+   //String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+   String uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
    
    def mflUrl = new URL(uString);
 
@@ -114,10 +114,12 @@ String normalizeId(Object team)
       case "SFO": team = "SF"; break;
       case "TBB": team = "TB"; break;
       case "NEP": team = "NE"; break;
-      case "SDC": team = "SD"; break;
+      case "SDC": team = "LAC"; break;
       case "ARZ": team = "ARI"; break;
       case "AZ":  team = "ARI"; break;
-	  case "RAM": team = "LA"; break;
+	  case "RAM": team = "LAR"; break;
+      case "LVR": team = "LV"; break;
+      case "OAK": team = "LV"; break;
 	  
       default:  break;  //do nothing
    }
