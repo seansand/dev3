@@ -15,7 +15,8 @@ request.week = params.size() == 0 ? 1 : new Integer(params.keySet()[0])
 
 Random r = new Random()
 
-String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+//String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+String uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
    
 def mflUrl = new URL(uString)
 
@@ -83,6 +84,7 @@ class Matchup implements Comparable {
          case 'KCC': return 'KC ';
          case 'NEP': return 'NE ';
          case 'NOS': return 'NO ';
+         case 'LVR': return 'LV ';
          default: return team
       }
       return team
