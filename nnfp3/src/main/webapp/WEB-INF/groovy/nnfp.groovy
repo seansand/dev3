@@ -43,11 +43,12 @@ try
    //String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
    String uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
    
-   def mflUrl = new URL(uString);
+   def mflUrl = new URL(uString);  
 
    //TEMP, use when faking MFL data
-   //def mflUrl = new URL("https://dl.dropboxusercontent.com/u/14876946/fakedata.xml");   // when faking MFL data
    
+   //def mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
+
    response = mflUrl.get()
    assert response.responseCode == 200
    
@@ -117,7 +118,7 @@ String normalizeId(Object team)
       case "SDC": team = "LAC"; break;
       case "ARZ": team = "ARI"; break;
       case "AZ":  team = "ARI"; break;
-	  case "RAM": team = "LAR"; break;
+	   case "RAM": team = "LAR"; break;
       case "LVR": team = "LV"; break;
       case "OAK": team = "LV"; break;
 	  
@@ -161,7 +162,7 @@ Map convertXmlToJson(String text,
           Integer secsRemaining = normalizeScore(m.@gameSecondsRemaining)
           String isHome = it.@isHome	
 
-		  String spreadString = it.@spread.toString();
+		    String spreadString = it.@spread.toString();
 		  
           Double spread = new Double(spreadString ? spreadString : "0.0");
           

@@ -3,7 +3,7 @@ var reloading;
 function checkReloading() 
 {
     if (window.location.hash=="#autorefresh") {
-        reloading=setTimeout("window.location.reload();", 300000);
+        reloading=setTimeout("window.location.reload();", 180000);
         document.getElementById("reloadCB").checked=true;
     }
 }
@@ -12,7 +12,7 @@ function toggleAutoRefresh(cb)
 {
     if (cb.checked) {
         window.location.replace("#autorefresh");
-        reloading=setTimeout("window.location.reload();", 300000);
+        reloading=setTimeout("window.location.reload();", 180000);
     } else {
         window.location.replace("#");
         clearTimeout(reloading);
@@ -560,6 +560,7 @@ function getProjections(resultsMap, playerScoreArrayIn, grid, odds, mfl, unknown
          });
    }
      
+   shuffle(playerProjectedWinsArray);  // must do this before calling sortByValFunctionRandom
    playerProjectedWinsArray.sort(sortByValFunctionRandom);
    playerProjectedWinsArray.reverse();
    
@@ -762,6 +763,7 @@ function getNnfpWinner(grid, winners, losers, ties, projectedLosers)
 
    //to get nnfpWinner = getOnlyKey(playerScoreArray[0]);
    
+   shuffle(playerScoreArray);  // must do this before calling sortByValFunctionRandom
    playerScoreArray.sort(sortByValFunctionRandom);
    return playerScoreArray;
 }

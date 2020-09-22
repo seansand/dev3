@@ -111,6 +111,14 @@ function alertOn(obj, label)
       alert(label + ": " + JSON.stringify(obj));
 }
 
+// from https://javascript.info/task/shuffle
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
 Math.nextGaussian = function()
 {
    var x1, x2, rad;
