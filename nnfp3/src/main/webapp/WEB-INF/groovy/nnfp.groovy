@@ -6,8 +6,6 @@ final Integer YEAR = Constants.YEAR
 
 Random r = new Random()
 
-boolean OLDWAY = false;
-
 try
 {
    // First get picks and return them as request.picksTxt
@@ -30,12 +28,6 @@ try
    
    // Then gets odds and return them as request.odds and request.opps
 	
-   if (OLDWAY)
-   {
-      request.oddsMap = NflOdds.getOdds()
-      request.oppsMap = NflOdds.getOpps()  
-   }
-   
    request.grid = convertToMapOfMaps(response.text)
    
    // Then get MFL results and return them as request.results   
@@ -46,26 +38,16 @@ try
    def mflUrl = new URL(uString);  
 
    //TEMP, use when faking MFL data
-   
-   //def mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
+   //mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
 
    response = mflUrl.get()
    assert response.responseCode == 200
    
    request.mflXml = response.text
 
-   if (OLDWAY)
-   {
-	  log.info("This should no longer ever appear");
-	  assert false;
-      request.mfl = convertXmlToJson(response.text)
-   }
-   else  // NEWWAY, spread is retrieved from MyFL data on webpage, rather than Dropbox location
-   {
-      request.oddsMap = [:];
-      request.oppsMap = [:];
-      request.mfl = convertXmlToJson(response.text, request.oddsMap, request.oppsMap)
-   }
+   request.oddsMap = [:];
+   request.oppsMap = [:];
+   request.mfl = convertXmlToJson(response.text, request.oddsMap, request.oppsMap)
    
 }
 
@@ -129,7 +111,6 @@ String normalizeId(Object team)
 }
 
 
-//OLDWAY = convertXmlToJson(String text) only
 //NEW WAY...this method also returns oddsMap, oppsMap
 
 /*

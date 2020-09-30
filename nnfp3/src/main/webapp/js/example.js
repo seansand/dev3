@@ -46,16 +46,14 @@ function onDocumentLoad()
    
    // Now do projections, if games are in progress
    
+   var projections = getProjections(resultsMap, playerScoreArray, gridObj, oddsObj, mflObj, resultsMap.unknown);
    if (resultsMap.unknown.length > 0)
    {
-      var projections = getProjections(resultsMap, playerScoreArray, gridObj, oddsObj, mflObj, resultsMap.unknown);
-   
       displayProjections(projections);
-      displayNflProjections(projections, mflObj, resultsMap);   
       displayKeyMatchups(projections, mflObj);
-      
-   }      // end projections
- 
+   }     
+   displayNflProjections(projections, mflObj, resultsMap);   // always display now.
+
    replaceHyphens();
  
    checkReloading(); 
