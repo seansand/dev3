@@ -67,6 +67,21 @@ function onDocumentLoad()
            $(this).css("background-color", "white");
        }
     );
+    
+   var matchupGridWidth = $(".matchup").width();
+
+   // Make sure result table is not too small
+   // (Seems to only happen for some mobile browsers?)
+   if (matchupGridWidth > $( "table.result").width()) {
+      $( "table.result").width(matchupGridWidth);
+   } 
+
+   // Make sure NFL projection table is not too small
+   // It should be at least as large as matchup (should be larger)
+   if (matchupGridWidth > $( "table.thin").width()) {
+      $( "table.thin").width(matchupGridWidth);
+   }
+    
 }
 
 function replaceHyphens() {
