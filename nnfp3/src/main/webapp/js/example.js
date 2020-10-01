@@ -42,7 +42,7 @@ function onDocumentLoad()
    var playerScoreArray = 
       getNnfpWinner(gridObj, resultsMap.winners, resultsMap.losers, resultsMap.ties, projectedLosers);  
 
-   displayCurrentScores(playerScoreArray, resultsMap.unknown);
+   displayCurrentScoresHorizontal(playerScoreArray, resultsMap.unknown);
    
    // Now do projections, if games are in progress
    
@@ -57,6 +57,16 @@ function onDocumentLoad()
    replaceHyphens();
  
    checkReloading(); 
+   
+   // Adds yellow highlighting
+   $( ".projection" ).hover(
+       function(){
+           $(this).css("background-color", "yellow");
+       }, 
+       function(){
+           $(this).css("background-color", "white");
+       }
+    );
 }
 
 function replaceHyphens() {
@@ -342,7 +352,7 @@ function displayNflProjections(projections, mfl, resultsMap)
 		"<TD ateamn=" + awayTeam + " hteamn=" + homeTeam + " align=center bgcolor='#A0A0D0'><SPAN class='normalfont'><nobr>&nbsp;"   //done grayblue
 	 
 	 nflStringArray[nflStringArray.length] = tdString +
-         displayNflScores(awayTeam, awayScore, homeTeam, homeScore, mfl[team].remaining) + "&nbsp;</nobr><BR><nobr>&nbsp;Final&nbsp;</nobr></SPAN></TD>"; 
+         displayNflScores(awayTeam, awayScore, homeTeam, homeScore, mfl[team].remaining) + "&nbsp;</nobr><BR><nobr>&nbsp;(Tie)&nbsp;</nobr></SPAN></TD>"; 
 		 
    }
    
@@ -481,7 +491,7 @@ function displayProjections(projections)
       "<P><NOBR>Projections below are based on point spreads and current game scores. " +
          //"<input type='button' value='Info' onClick='alertInfo();'>" + 
          '<a href="javascript:alertInfo();">' +
-         '<img height=12 width=12 alt="info" src="img/info.png" />' +
+         '<img class="projection" height=12 width=12 alt="info" src="img/info.png" />' +
          "</a></NOBR><BR>";
    var reps = getReps();
    
@@ -608,6 +618,9 @@ function displayCurrentSums(playerScoreArray, unknownTeams)
    jQuery(".matchup").last().html(lastLine + scoreLine);
 }
 
+/**
+ * Old vertical way of doing scores
+ */
 
 function displayCurrentScores(playerScoreArray, unknownTeams)
 {
@@ -629,6 +642,43 @@ function displayCurrentScores(playerScoreArray, unknownTeams)
          resultsString += "<NOBR><SPAN CLASS='normalfont'>" + getOnlyKey(playerScorePair) + ": <B>" + getOnlyVal(playerScorePair) + "</B></SPAN><span class='bigfont'>&nbsp;</span></NOBR><BR>";
       });
    }
+   
+   resultsString += "</P>",
+   
+   document.getElementById('jsResultsGoHere').innerHTML = resultsString;
+}
+
+function displayCurrentScoresHorizontal(playerScoreArray, unknownTeams)
+{
+   var resultsString = "<P><NOBR><SPAN class='normalfont'>";
+
+   if (unknownTeams.length == 0)
+      resultsString += "Results complete.";
+   else if (unknownTeams.length == 2)
+      resultsString += 'One game not yet determined. &nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+
+   else
+      resultsString += (unknownTeams.length / 2) + ' games not yet determined. &nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   
+   resultsString += "<P><TABLE class='result'><TR>";
+   
+   var winnerScore = -1;
+   if (unknownTeams.length === 0) {  // games are done, find lowest (best) score
+      var winner = playerScoreArray.reduce(function (lowestPair, pair) {
+         return (getOnlyVal(lowestPair) || 9999) < getOnlyVal(pair) ? lowestPair : pair;}, {});
+      winnerScore = getOnlyVal(winner);   
+   }
+   
+   $.map(playerScoreArray, function(playerScorePair) {
+      if (getOnlyVal(playerScorePair) === winnerScore)
+         resultsString += '<TD BGCOLOR="#AAFFAA" ';
+      else 
+         resultsString += '<TD BGCOLOR=WHITE ';
+       
+      resultsString += "ALIGN=CENTER><SPAN CLASS='normalfont'>" + getOnlyKey(playerScorePair) + "<BR><B>" + getOnlyVal(playerScorePair) + "</B></SPAN></TD>"    
+   });
+   
+   resultsString += "</TR></TABLE>";
    
    resultsString += "</P>",
    

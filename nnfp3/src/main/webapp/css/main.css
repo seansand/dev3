@@ -43,6 +43,28 @@ table.thin
   color: #000000;
 }
 
+
+table.result
+{
+  border-width: 0 0 0px 0px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-style: solid;
+}
+.result td, .result th
+{
+  margin: 0;
+  padding: 2px;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  min-width:52px;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; 
+  font-size:10pt
+  color: #000000;
+}
+
+
+
 .normalfont { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt} 
 .matchup { color: #000000; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:10pt; hyphens: none} 
 .smallfont { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace, serif; font-size:9pt} 

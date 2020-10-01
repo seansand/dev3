@@ -22,7 +22,6 @@ try
    assert m.find()
    request.week = m.group(1)
    
-   
    def picksTxt = response.text
    request.picksTxt = response.text
    
@@ -37,7 +36,7 @@ try
    
    def mflUrl = new URL(uString);  
 
-   //TEMP, use when faking MFL data
+   //TEMP, uncomment when testing with fake MFL data
    //mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
 
    response = mflUrl.get()
@@ -48,7 +47,6 @@ try
    request.oddsMap = [:];
    request.oppsMap = [:];
    request.mfl = convertXmlToJson(response.text, request.oddsMap, request.oppsMap)
-   
 }
 
 finally
