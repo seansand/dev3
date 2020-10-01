@@ -98,7 +98,7 @@ function displayKeyMatchups(projections, mfl)
                
       */
    
-   var MAX_MATCHUP_DISPLAY = 9;   // was 10
+   var MAX_MATCHUP_DISPLAY = 8;   // was 10, then 9, now 8
    
    
    for (var i = 0; i < keyMatchupsArray.length; ++i)
@@ -395,7 +395,7 @@ function displayNflProjections(projections, mfl, resultsMap)
    {
       first = false;
       nflString += nflStringArray[i];
-      if (column++ % 5 == 4)
+      if (column++ % 4 == 3)     // was % 5 == 4
       {
          nflString += "</TR><TR>";
       }
@@ -488,7 +488,7 @@ function alertInfo()
 function displayProjections(projections)
 {
    var projectionString = 
-      "<P><NOBR>Projections below are based on point spreads and current game scores. " +
+      "<P><NOBR>Projections are based on point spreads and current game scores. " +
          //"<input type='button' value='Info' onClick='alertInfo();'>" + 
          '<a href="javascript:alertInfo();">' +
          '<img class="projection" height=12 width=12 alt="info" src="img/info.png" />' +
