@@ -98,7 +98,7 @@ function displayKeyMatchups(projections, mfl)
                
       */
    
-   var MAX_MATCHUP_DISPLAY = 8;   // was 10, then 9, now 8
+   var MAX_MATCHUP_DISPLAY = 7;   // was 10, then 9, now 7
    
    
    for (var i = 0; i < keyMatchupsArray.length; ++i)
@@ -402,7 +402,12 @@ function displayNflProjections(projections, mfl, resultsMap)
       
    }
    nflString += "</TR></TABLE>";
-  
+   
+   //Add spaces to the bottom so that the page has a small right margin for mobile
+   for (var s = 0; s < 71; s++) {
+      nflString += '&nbsp;';
+   }
+     
    document.getElementById('jsNflProjectionsGoHere').innerHTML = nflString;
 }
 
@@ -470,7 +475,7 @@ function getCorrectOrderFromBody()
 
 function alertInfo()
 {
-   alert("The teams and values to the right of each player projection are an indicator of the teams that the " +
+   alert("Winning percentage projections:\n\nThe teams and values to the right of each percentage projection are an indicator of the teams that the " +
          'player needs to win in order to win this week of NNFP. The number that ' +
          "appears is the difference in percentage, above the team's actual win percentage, " +
          "in a player's total win set. The higher the number, the better " +
@@ -487,12 +492,15 @@ function alertInfo()
 
 function displayProjections(projections)
 {
+   var projectionString = '<P>';
+   /*
    var projectionString = 
       "<P><NOBR>Projections are based on point spreads and current game scores. " +
          //"<input type='button' value='Info' onClick='alertInfo();'>" + 
          '<a href="javascript:alertInfo();">' +
          '<img class="projection" height=12 width=12 alt="info" src="img/info.png" />' +
          "</a></NOBR><BR>";
+   */      
    var reps = getReps();
    
    $.map(projections.playerWinsArray, function(item) {
@@ -619,7 +627,7 @@ function displayCurrentSums(playerScoreArray, unknownTeams)
 }
 
 /**
- * Old vertical way of doing scores
+ * Old vertical way of doing scores, not used 
  */
 
 function displayCurrentScores(playerScoreArray, unknownTeams)
@@ -628,11 +636,14 @@ function displayCurrentScores(playerScoreArray, unknownTeams)
 
    if (unknownTeams.length == 0)
       resultsString += "Results complete.";
-   else if (unknownTeams.length == 2)
-      resultsString += 'One game not yet determined. &nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
-
-   else
-      resultsString += (unknownTeams.length / 2) + ' games not yet determined. &nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   else if (unknownTeams.length == 2) {
+      resultsString += 'One game not yet determined. ';
+      resultsString += '&nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   }
+   else {
+      resultsString += (unknownTeams.length / 2) + ' games not yet determined. ';
+      resultsString += '&nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   }
      
    if (true)                         //always display     
    //if (unknownTeams.length == 0)   //only display this when finished
@@ -654,11 +665,16 @@ function displayCurrentScoresHorizontal(playerScoreArray, unknownTeams)
 
    if (unknownTeams.length == 0)
       resultsString += "Results complete.";
-   else if (unknownTeams.length == 2)
-      resultsString += 'One game not yet determined. &nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
-
-   else
-      resultsString += (unknownTeams.length / 2) + ' games not yet determined. &nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   else if (unknownTeams.length == 2) {
+      resultsString += 'One game not yet determined. ';
+      resultsString += '<a href="javascript:alertInfo();"><img class="projection" height=12 width=12 alt="info" src="img/info.png" /></a>&nbsp;';
+      resultsString += '&nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   }
+   else {
+      resultsString += (unknownTeams.length / 2) + ' games not yet determined. ';
+      resultsString += '<a href="javascript:alertInfo();"><img class="projection" height=12 width=12 alt="info" src="img/info.png" /></a>&nbsp;';
+      resultsString += '&nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   }
    
    resultsString += "<P><TABLE class='result'><TR>";
    
