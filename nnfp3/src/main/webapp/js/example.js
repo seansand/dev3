@@ -74,14 +74,19 @@ function onDocumentLoad()
    // (Seems to only happen for some mobile browsers?)
    if (matchupGridWidth > $( "table.result").width()) {
       $( "table.result").width(matchupGridWidth);
+      
+      if ($("table.result").height() < matchupGridWidth / 15)
+         $("table.result").height(matchupGridWidth / 15);
    } 
 
    // Make sure NFL projection table is not too small
    // It should be at least as large as matchup (should be larger)
    if (matchupGridWidth > $( "table.thin").width()) {
       $( "table.thin").width(matchupGridWidth);
+      
+      if ($("table.thin").height() < matchupGridWidth / 5)
+         $("table.thin").height(matchupGridWidth / 5);
    }
-    
 }
 
 function replaceHyphens() {
@@ -343,7 +348,7 @@ function displayNflProjections(projections, mfl, resultsMap)
 	 var awayScore = home ? mfl[team].oppScore : mfl[team].score;
 	 
 	 var tdString = 
-		"<TD ateamn=" + awayTeam + " hteamn=" + homeTeam + " align=center bgcolor='#A0A0A0'><SPAN class='normalfont'><nobr>&nbsp;"   //done dkgray
+		"<TD ateamn=" + awayTeam + " hteamn=" + homeTeam + " align=center bgcolor='#B0B0B0'><SPAN class='normalfont'><nobr>&nbsp;"   //done dkgray
 
  	 nflStringArray[nflStringArray.length] = tdString +
          displayNflScores(awayTeam, awayScore, homeTeam, homeScore, mfl[team].remaining) + "&nbsp;</nobr><BR><nobr>&nbsp;Final&nbsp;</nobr></SPAN></TD>"; 
