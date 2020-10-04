@@ -2,9 +2,8 @@
 
 import java.util.regex.*;
 
-final Integer YEAR = Constants.YEAR
-
 Random r = new Random()
+final Integer YEAR = Constants.YEAR
 
 try
 {
@@ -31,22 +30,20 @@ try
    
    // Then get MFL results and return them as request.results   
   
-   //String uString = "http://www.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
-   String uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+   // NEW 
+   String newestText = getNewestMflUrlResponse()
+   request.mflXml = newestText
    
-   def mflUrl = new URL(uString);  
-
-   //TEMP, uncomment when testing with fake MFL data
-   //mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
-
-   response = mflUrl.get()
-   assert response.responseCode == 200
+   // ORIG
+   //String uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+   //def mflUrl = new URL(uString);  
+   //response = mflUrl.get()
+   //assert response.responseCode == 200
+   //request.mflXml = response.text
    
-   request.mflXml = response.text
-
    request.oddsMap = [:];
    request.oppsMap = [:];
-   request.mfl = convertXmlToJson(response.text, request.oddsMap, request.oppsMap)
+   request.mfl = convertXmlToJson(newestText, request.oddsMap, request.oppsMap)
 }
 
 finally
@@ -57,6 +54,63 @@ finally
 //////////////
 forward '/WEB-INF/pages/nnfp.gtpl'
 //////////////
+
+
+String getNewestMflUrlResponse() {
+
+   final Integer YEAR = Constants.YEAR
+   List responseTexts = [];
+   Random r = new Random()
+   String uString
+   def thisResponse
+
+   Integer i;
+   for (i = 0; i < 10; ++i)
+   {
+      uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+      def mflUrl = new URL(uString);  
+
+      //TEMP, uncomment when testing with fake MFL data
+      //mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
+
+      thisResponse = mflUrl.get()
+      
+      // break if you have three HTTP 200 successes
+      if (thisResponse.responseCode == 200)
+      {
+         responseTexts << thisResponse.text
+         if (responseTexts.size() >= 3) 
+            break;
+      }
+   }   
+
+   if (i == 10)
+   {
+      throw new RuntimeException("Could not get good response from $uString");
+   }
+   
+   // Check the three goodResponses.text... go through each matchup and sum the gameSecondsRemaining
+   // Take the one who has the least gameSecondsRemaining.
+
+   Integer tr0 = timeRemaining(responseTexts[0])
+   Integer tr1 = timeRemaining(responseTexts[1])
+   Integer tr2 = timeRemaining(responseTexts[2])
+
+   if (tr0 <= tr1 && tr0 <= tr2)
+      return responseTexts[0];
+   else if (tr1 <= tr0 && tr1 <= tr2)
+      return responseTexts[1];
+   else
+      return responseTexts[2];
+}
+
+Integer timeRemaining(String text)
+{
+   def nflSchedule = new XmlSlurper().parseText(text)
+   Integer totalTimeRemaining = 0;
+   nflSchedule.matchup.each { totalTimeRemaining += normalizeScore(it.@gameSecondsRemaining) }
+   return totalTimeRemaining;
+}
 
 boolean stringContainsDigit(String str)
 {
