@@ -3,7 +3,7 @@ var reloading;
 function checkReloading() 
 {
     if (window.location.hash=="#autorefresh") {
-        reloading=setTimeout("window.location.reload();", 180000);
+        reloading=setTimeout("window.location.reload();", 300000);  //setting back to 5 min to reduce cost
         document.getElementById("reloadCB").checked=true;
     }
 }
@@ -12,7 +12,7 @@ function toggleAutoRefresh(cb)
 {
     if (cb.checked) {
         window.location.replace("#autorefresh");
-        reloading=setTimeout("window.location.reload();", 180000);
+        reloading=setTimeout("window.location.reload();", 300000);  //setting back to 5 min to reduce cost
     } else {
         window.location.replace("#");
         clearTimeout(reloading);
@@ -870,11 +870,11 @@ function getReps()
    reps = parseInt(reps);
    if (reps == undefined || isNaN(reps))
    {
-      reps = 10000;
+      reps = 5000;  // halving reps to reduce cost
    }
-   if (reps < 10 || reps > 1000000)
+   if (reps < 10 || reps > 100000)
    {
-      reps = 10000;
+      reps = 5000;
    }
    return reps
 }
