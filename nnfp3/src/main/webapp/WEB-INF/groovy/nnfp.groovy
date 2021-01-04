@@ -60,14 +60,18 @@ String getNewestMflUrlResponse() {
 
    final Integer YEAR = Constants.YEAR
    List responseTexts = [];
-   Random r = new Random()
+   //Random r = new Random()
    String uString
    def thisResponse
 
+   final int ATTEMPTS = 100
+   final int SUCCESSES = 10
+
    Integer i;
-   for (i = 0; i < 10; ++i)
+   for (i = 0; i < ATTEMPTS; ++i)
    {
-      uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=${r.nextInt()}";
+      def r =  java.lang.System.nanoTime()
+      uString = "https://api.myfantasyleague.com/$YEAR/export?TYPE=nflSchedule&L=&W=${request.week}&whatever=$r";
       def mflUrl = new URL(uString);  
 
       //TEMP, uncomment when testing with fake MFL data
@@ -75,41 +79,52 @@ String getNewestMflUrlResponse() {
 
       thisResponse = mflUrl.get()
       
-      // break if you have three HTTP 200 successes
-      if (thisResponse.responseCode == 200)
+      // break if you have ten HTTP 200 successes
+      if (thisResponse.responseCode == 200 && thisResponse.text != null)
       {
          responseTexts << thisResponse.text
-         if (responseTexts.size() >= 3) 
+         if (responseTexts.size() >= SUCCESSES) 
             break;
       }
    }   
 
-   if (i == 10)
+   if (i == ATTEMPTS)
    {
-      throw new RuntimeException("Could not get good response from $uString");
+      throw new RuntimeException("Could not get good response from $uString after $ATTEMPTS tries.");
    }
    
-   // Check the three goodResponses.text... go through each matchup and sum the gameSecondsRemaining
+   // Check the ten goodResponses.text... go through each matchup and sum the gameSecondsRemaining
    // Take the one who has the least gameSecondsRemaining.
 
-   Integer tr0 = timeRemaining(responseTexts[0])
-   Integer tr1 = timeRemaining(responseTexts[1])
-   Integer tr2 = timeRemaining(responseTexts[2])
+   List<Integer> trs = []
 
-   if (tr0 <= tr1 && tr0 <= tr2)
-      return responseTexts[0];
-   else if (tr1 <= tr0 && tr1 <= tr2)
-      return responseTexts[1];
-   else
-      return responseTexts[2];
+   (0..<SUCCESSES).each()
+   {
+      //println("$it: size ${responseTexts.size()}")
+      trs[it] = timeRemaining(responseTexts[it])
+   }
+   //println(trs)
+
+   for (int j = 0; j < SUCCESSES; ++j)
+   {
+      if (trs[j] == trs.min())
+         return responseTexts[j]
+   }
 }
 
 Integer timeRemaining(String text)
 {
-   def nflSchedule = new XmlSlurper().parseText(text)
-   Integer totalTimeRemaining = 0;
-   nflSchedule.matchup.each { totalTimeRemaining += normalizeScore(it.@gameSecondsRemaining) }
-   return totalTimeRemaining;
+   try
+   {
+      def nflSchedule = new XmlSlurper().parseText(text)
+      Integer totalTimeRemaining = 0;
+      nflSchedule.matchup.each { totalTimeRemaining += normalizeScore(it.@gameSecondsRemaining) }
+      return totalTimeRemaining;
+   }
+   catch (Exception e)
+   {
+      return 99999;  // This should not happen but it does.
+   }
 }
 
 boolean stringContainsDigit(String str)
