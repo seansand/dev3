@@ -9,7 +9,7 @@
       if (m.find())
       {
          print('<h2 id="nnfpbetaheader" class="betaheader"><nobr><i>NNFP latest results</I>&nbsp;&nbsp;<SMALL><SMALL><SPAN title=' + year + '>WEEK ' + m.group(1) + '</SPAN></SMALL></SMALL>');
-         print('</nobr></h2>');
+         print('</nobr> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span title="Auto-refresh"><input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB"> </span></h2>');
       }
    
       request.picksTxt.eachLine()
@@ -27,14 +27,6 @@
 <span id="jsResultsGoHere"></span>
 <span id="jsProjectionsGoHere"></span>
 <span id="jsNflProjectionsGoHere"></span>
-
-<!-- remove footer
-
-<h4 class="betafooter"> </h4>
-<span class="tinyfont"><FONT COLOR = "#808080">Prefer no JavaScript? Or projections based on NFL final scores only? </FONT>
-<A HREF="http://seansand.appspot.com/nnfpclassic.groovy">The previous version is here.</A></SPAN> 
-
--->
 
 <%
    import groovy.json.JsonBuilder

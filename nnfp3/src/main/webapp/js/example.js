@@ -58,15 +58,21 @@ function onDocumentLoad()
  
    checkReloading(); 
    
-   // Adds yellow highlighting
+   // Adds yellow-orange highlighting
    $( ".projection" ).hover(
-       function(){
-           $(this).css("background-color", "yellow");
+       function() {
+           $(this).css("background-color", "#ffd366");
        }, 
-       function(){
+       function() {
            $(this).css("background-color", "white");
        }
     );
+    
+   $( ".projection" ).click(
+       function() {
+           alertInfo();
+       }
+    ); 
     
    var matchupGridWidth = $(".matchup").width();
 
@@ -526,19 +532,23 @@ function displayProjections(projections)
    $.map(projections.playerWinsArray, function(item) {
       var player = getOnlyKey(item);
       var wins = getOnlyVal(item);
-      var percentage = Math.round(100 * wins / reps);
       
-      var proj = player + " wins <B>" + percentage + "%</B> ";
+      if (wins > 0) {    // causes players with no wins to disappear
+      
+         var percentage = Math.round(100 * wins / reps);
+         
+         var proj = player + " wins <B>" + percentage + "%</B> ";
 
-      while (proj.length < 24)
-      {
-         proj += "#";
+         while (proj.length < 24)
+         {
+            proj += "#";
+         }
+         proj = replaceAll(proj, "#", "&nbsp;");
+         proj += "<span class='bigfont'>&nbsp;</span>";
+         
+         projectionString += "<BR><NOBR>" + "<SPAN class='projection' id = '" + player + "proj'>" 
+                             + proj + "</SPAN>";
       }
-      proj = replaceAll(proj, "#", "&nbsp;");
-      proj += "<span class='bigfont'>&nbsp;</span>";
-      
-      projectionString += "<BR><NOBR>" + "<SPAN class='projection' id = '" + player + "proj'>" 
-                          + proj + "</SPAN>";
       
    });
 
@@ -650,7 +660,7 @@ function displayCurrentSums(playerScoreArray, unknownTeams)
  * Old vertical way of doing scores, not used 
  */
 
-function displayCurrentScores(playerScoreArray, unknownTeams)
+function displayCurrentScoresOLD(playerScoreArray, unknownTeams)
 {
    var resultsString = "<P><NOBR><SPAN class='normalfont'>";
 
@@ -679,7 +689,7 @@ function displayCurrentScores(playerScoreArray, unknownTeams)
    document.getElementById('jsResultsGoHere').innerHTML = resultsString;
 }
 
-function displayCurrentScoresHorizontal(playerScoreArray, unknownTeams)
+function displayCurrentScoresHorizontalOLD(playerScoreArray, unknownTeams)
 {
    var resultsString = "<P><NOBR><SPAN class='normalfont'>";
 
@@ -722,6 +732,49 @@ function displayCurrentScoresHorizontal(playerScoreArray, unknownTeams)
 
 }
 
+function displayCurrentScoresHorizontal(playerScoreArray, unknownTeams)
+{
+   var resultsString = "";
+   /*
+   var resultsString = "<P><NOBR><SPAN class='normalfont'>";
+   if (unknownTeams.length == 0)
+      resultsString += "Results complete.";
+   else if (unknownTeams.length == 2) {
+      resultsString += 'One game not yet determined. ';
+      resultsString += '<a href="javascript:alertInfo();"><img class="projection" height=12 width=12 alt="info" src="img/info.png" /></a>&nbsp;';
+      resultsString += '&nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   }
+   else {
+      resultsString += (unknownTeams.length / 2) + ' games not yet determined. ';
+      resultsString += '<a href="javascript:alertInfo();"><img class="projection" height=12 width=12 alt="info" src="img/info.png" /></a>&nbsp;';
+      resultsString += '&nbsp;Auto-refresh: <input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB">';
+   }
+   */
+   resultsString += "<P><TABLE class='result'><TR>";
+   
+   var winnerScore = -1;
+   if (unknownTeams.length === 0) {  // games are done, find lowest (best) score
+      var winner = playerScoreArray.reduce(function (lowestPair, pair) {
+         return (getOnlyVal(lowestPair) || 9999) < getOnlyVal(pair) ? lowestPair : pair;}, {});
+      winnerScore = getOnlyVal(winner);   
+   }
+   
+   $.map(playerScoreArray, function(playerScorePair) {
+      if (getOnlyVal(playerScorePair) === winnerScore)
+         resultsString += '<TD BGCOLOR="#AAFFAA" ';
+      else 
+         resultsString += '<TD BGCOLOR=WHITE ';
+       
+      resultsString += "ALIGN=CENTER><SPAN CLASS='normalfont'>" + getOnlyKey(playerScorePair) + "<BR><B>" + getOnlyVal(playerScorePair) + "</B></SPAN></TD>"    
+   });
+   
+   resultsString += "</TR></TABLE>";
+   
+   resultsString += "</P>",
+   
+   document.getElementById('jsResultsGoHere').innerHTML = resultsString;
+
+}
 
 // function in: unknown, grid, returns array of random losers
 function getProjection(odds, mfl, unknown, overallWinnerCountMap, overallLoserCountMap)
