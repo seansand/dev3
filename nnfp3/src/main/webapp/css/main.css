@@ -10,15 +10,16 @@ h1 {
 }
 h2 {
 	color: #D33381;
-
 }
-h3 {
+
+h3 {
 	color: #D33381;
 	border-top: black 3px dotted;
 }
 .betaheader {
 	color: #000080; 
-
+   font-size:14pt;
+   font-weight:bold;
 }
 .betafooter {
 	color: #000080; border-bottom: #CCCCCC 3px double}

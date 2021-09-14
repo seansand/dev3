@@ -8,8 +8,8 @@
       def m = p.matcher(request.picksTxt);
       if (m.find())
       {
-         print('<h2 id="nnfpbetaheader" class="betaheader"><nobr><i>NNFP latest results</I>&nbsp;&nbsp;<SMALL><SMALL><SPAN title=' + year + '>WEEK ' + m.group(1) + '</SPAN></SMALL></SMALL>');
-         print('</nobr> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span title="Auto-refresh"><input type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB"> </span></h2>');
+         print('<div id="nnfpbetaheader" class="betaheader"><nobr><i>NNFP latest results</I>&nbsp;&nbsp;&nbsp;<SMALL><SMALL><SPAN title=' + year + '>WEEK ' + m.group(1) + '</SMALL></SMALL></SPAN>');
+         print('<span style="font" title="Auto-refresh"><input style="position:relative; left:20px;" type="checkbox" onclick="toggleAutoRefresh(this);" id="reloadCB"></span></div><br>');
       }
    
       request.picksTxt.eachLine()
