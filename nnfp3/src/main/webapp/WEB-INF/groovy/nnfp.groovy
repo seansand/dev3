@@ -77,7 +77,11 @@ String getNewestMflUrlResponse() {
       //TEMP, uncomment when testing with fake MFL data
       //mflUrl = new URL("http://seansand.appspot.com/dx/fakedata");  // DO NOT CHECK IN
 
-      thisResponse = mflUrl.get()
+      thisResponse = mflUrl.get()  // worked as of 2022 (had issues one week)
+
+      //thisResponse = groovyx.gaelyk.extensions.UrlFetchExtensions.get(mflUrl, ["deadline" : 20.0])  // seconds to wait (default is 5.0)
+      // Doesn't even work if you wait 20 seconds
+      // TEST URL = https://api.myfantasyleague.com/2022/export?TYPE=nflSchedule&L=&W=1&whatever=186393210252900
       
       // break if you have ten HTTP 200 successes
       if (thisResponse.responseCode == 200 && thisResponse.text != null)

@@ -712,7 +712,7 @@ function displayCurrentScoresHorizontalOLD(playerScoreArray, unknownTeams)
    if (unknownTeams.length === 0) {  // games are done, find lowest (best) score
       var winner = playerScoreArray.reduce(function (lowestPair, pair) {
          return (getOnlyVal(lowestPair) || 9999) < getOnlyVal(pair) ? lowestPair : pair;}, {});
-      winnerScore = getOnlyVal(winner);   
+      winnerScore = getOnlyVal(winner);     // 9999 is a bug
    }
    
    $.map(playerScoreArray, function(playerScorePair) {
@@ -755,8 +755,8 @@ function displayCurrentScoresHorizontal(playerScoreArray, unknownTeams)
    var winnerScore = -1;
    if (unknownTeams.length === 0) {  // games are done, find lowest (best) score
       var winner = playerScoreArray.reduce(function (lowestPair, pair) {
-         return (getOnlyVal(lowestPair) || 9999) < getOnlyVal(pair) ? lowestPair : pair;}, {});
-      winnerScore = getOnlyVal(winner);   
+         return getOnlyVal(lowestPair) < getOnlyVal(pair) ? lowestPair : pair;}, {});
+      winnerScore = getOnlyVal(winner);   // 2022-11 fix was here
    }
    
    $.map(playerScoreArray, function(playerScorePair) {
